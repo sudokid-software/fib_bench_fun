@@ -1,3 +1,4 @@
+; SudoKid
             global  _start
 
             section .text
