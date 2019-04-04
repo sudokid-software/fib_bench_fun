@@ -1,5 +1,5 @@
 #include <stdio.h>
- 
+ /* botfelk */
 int main(void) {
     unsigned long long a, b, tmp;
     a = b = 1;
