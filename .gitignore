@@ -1,0 +1,5 @@
+*.o
+*.out
+.gdb_history
+peda-session-fib.out.txt
+__pycache__
