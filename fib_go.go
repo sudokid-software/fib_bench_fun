@@ -1,3 +1,4 @@
+// Wagner Riffel <w@9shit.dev>
 package main
 
 import "fmt"
