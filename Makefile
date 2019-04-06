@@ -1,6 +1,9 @@
 asm:
 	nasm -felf64 fib.asm && ld fib.o -o fib.out && ./fib.out
 
+no_buffer_asm:
+	nasm -felf64 fib_no_buffer.asm && ld fib_no_buffer.o -o fib_no_buffer.out
+
 asm_with_printf:
 	nasm -felf64 fib_asm_c.asm && gcc-4.9 fib_asm_c.o -o fib_asm_c.out
 
@@ -20,5 +23,5 @@ luajit:
 	luajit -b fib_luajit.lua fib_luajit.luajit
 
 bench:
-	hyperfine './fib.out' './fib_c.out' './fib_rust.out' 'elixir fib_elixir.exs' 'java -jar fib_clj.jar' 'node fib_javascript.js' './fib_asm_c.out' 'GOGC=off ./fib_go.out' './fib_c_draco.out' 'python3 fib_python3.py' 'luajit fib_luajit.luajit' 'lua fib_lua.lua'
+	hyperfine './fib.out' './fib_c.out' './fib_rust.out' 'elixir fib_elixir.exs' 'java -jar fib_clj.jar' 'node fib_javascript.js' './fib_asm_c.out' 'GOGC=off ./fib_go.out' './fib_c_draco.out' 'python3 fib_python3.py' 'luajit fib_luajit.luajit' 'lua fib_lua.lua' './fib_no_buffer.out'
 
