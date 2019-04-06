@@ -6,6 +6,8 @@ Please note that the benchmarks change pending on what you computer is doing. Ta
 
 Last benchmark results:
 Summary
+
+```
 './fib.out' ran
 1.74 ± 4.57 times faster than './fib_no_buffer.out'
 3.61 ± 7.66 times faster than './fib_c.out'
@@ -21,3 +23,4 @@ Summary
 913.29 ± 1813.77 times faster than 'ruby fib_ruby.rb'
 8587.39 ± 17053.24 times faster than 'elixir fib_elixir.exs'
 11890.59 ± 23617.70 times faster than 'java -jar fib_clj.jar'
+```
