@@ -1,27 +1,36 @@
-asm:
-	nasm -felf64 fib.asm && ld fib.o -o fib.out && ./fib.out
+all: bench
 
-no_buffer_asm:
-	nasm -felf64 fib_no_buffer.asm && ld fib_no_buffer.o -o fib_no_buffer.out
+fib.out: fib.asm fib.o
+	nasm -felf64 $<
+	ld fib.o -o $@
 
-asm_with_printf:
-	nasm -felf64 fib_asm_c.asm && gcc-4.9 fib_asm_c.o -o fib_asm_c.out
+fib_no_buffer.out: fib_no_buffer.asm fib_no_buffer.o
+	nasm -felf64 $<
+	ld -o $@ fib_no_buffer.o
 
-c:
-	gcc -O3 fib_c.c -o fib_c.out
+fib_asm_c.out: fib_asm_c.asm fib_asm_c.o
+	nasm -felf64 $<
+	gcc -static -o $@ fib_asm_c.o
 
-c_draco:
-	gcc -O3 fib_c_draco.c -o fib_c_draco.out
+fib_c.out: fib_c.c
+	gcc -std=c89 -pedantic -O4 -flto -s -static -nostdlib -nostdinc -o $@ $<
 
-rust:
-	rustc -O fib_rust.rs -o fib_rust.out
+fib_c_draco.out: fib_c_draco.c
+	gcc -O3 -o $@ $<
 
-go:
-	go build -o fib_go.out fib_go.go
+fib_rust.out: fib_rust.rs
+	rustc -O $< -o $@
 
-luajit:
-	luajit -b fib_luajit.lua fib_luajit.luajit
+fib_go.out: fib_go.go
+	go build -o $@ fib_go.go
 
-bench:
-	hyperfine './fib.out' './fib_c.out' './fib_rust.out' 'elixir fib_elixir.exs' 'java -jar fib_clj.jar' 'node fib_javascript.js' './fib_asm_c.out' 'GOGC=off ./fib_go.out' './fib_c_draco.out' 'python3 fib_python3.py' 'luajit fib_luajit.luajit' 'lua fib_lua.lua' './fib_no_buffer.out' 'node fib_staghouse.js' 'ruby fib_ruby.rb'
+fib_lua.luajit.out: fib_lua.lua
+	luajit -b $< $@
 
+fib_lua.luac.out: fib_lua.lua
+	luac -s -o $@ $<
+
+bench: fib.out fib_no_buffer.out fib_asm_c.out fib_c.out fib_c_draco.out fib_rust.out fib_go.out fib_lua.luajit.out fib_lua.luac.out
+	hyperfine './fib.out' './fib_c.out' './fib_rust.out' 'elixir fib_elixir.exs' 'java -jar fib_clj.jar' 'node fib_javascript.js' './fib_asm_c.out' 'GOGC=off ./fib_go.out' './fib_c_draco.out' 'python3 fib_python3.py' 'luajit fib_lua.luajit.out' 'lua fib_lua.luac.out' './fib_no_buffer.out' 'node fib_staghouse.js' 'ruby fib_ruby.rb'
+
+.PHONY: all bench

@@ -1,8 +1,8 @@
--- Wagner Riffel <w@9shit.dev>
-local tmp, a, b = 0, 0, 1
-while tmp < 1779979416004714189 do
-	tmp = a + b
+-- Wagner Riffel <wgrriffel at gmail d𝞱t com>
+local a, b = 0, 1
+for i=1, 90 do
+	print(string.format("%20d", a))
+	local tmp = a + b
 	a = b
 	b = tmp
-	print(string.format("%20d", tmp))
 end
