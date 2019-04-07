@@ -19,8 +19,9 @@ rust:
 go:
 	go build -o fib_go.out fib_go.go
 
-luajit:
-	luajit -b fib_luajit.lua fib_luajit.luajit
+lua: fib_lua.lua
+	luajit -b $< fib_lua.luajit
+	luac -s -o fib_lua.luac $<
 
 bench:
-	hyperfine './fib.out' './fib_c.out' './fib_rust.out' 'elixir fib_elixir.exs' 'java -jar fib_clj.jar' 'node fib_javascript.js' './fib_asm_c.out' 'GOGC=off ./fib_go.out' './fib_c_draco.out' 'python3 fib_python3.py' 'luajit fib_luajit.luajit' 'lua fib_lua.lua' './fib_no_buffer.out' 'node fib_staghouse.js' 'ruby fib_ruby.rb'
+	hyperfine './fib.out' './fib_c.out' './fib_rust.out' 'elixir fib_elixir.exs' 'java -jar fib_clj.jar' 'node fib_javascript.js' './fib_asm_c.out' 'GOGC=off ./fib_go.out' './fib_c_draco.out' 'python3 fib_python3.py' 'luajit fib_luajit.luajit' 'lua fib_lua.luac' './fib_no_buffer.out' 'node fib_staghouse.js' 'ruby fib_ruby.rb'
