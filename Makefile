@@ -1,16 +1,22 @@
 all: bench
 
-fib.out: fib.asm fib.o
-	nasm -felf64 $<
+fib.o: fib.asm
+	nasm -felf64 -o $@ $<
+
+fib.out: fib.o
 	ld fib.o -o $@
 
-fib_no_buffer.out: fib_no_buffer.asm fib_no_buffer.o
-	nasm -felf64 $<
+fib_no_buffer.o: fib_no_buffer.asm
+	nasm -felf64 -o $@ $<
+
+fib_no_buffer.out: fib_no_buffer.o
 	ld -o $@ fib_no_buffer.o
 
-fib_asm_c.out: fib_asm_c.asm fib_asm_c.o
-	nasm -felf64 $<
-	gcc -static -o $@ fib_asm_c.o
+fib_asm_c.o: fib_asm_c.asm
+	nasm -felf64 -o $@ $<
+
+fib_asm_c.out: fib_asm_c.o
+	gcc -static -o $@ $<
 
 fib_c.out: fib_c.c
 	gcc -std=c89 -pedantic -O4 -flto -s -static -nostdlib -nostdinc -o $@ $<
