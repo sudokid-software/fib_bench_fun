@@ -10,7 +10,7 @@ no_buffer_asm: fib_no_buffer.asm
 
 asm_with_printf: fib_asm_c.asm
 	nasm -felf64 $<
-	ld -o fib_asm_c.out -e main -lc fib_asm_c.o
+	gcc -static -o fib_asm_c.out fib_asm_c.o
 
 c: fib_c.c
 	gcc -std=c89 -pedantic -O4 -flto -s -static -nostdlib -nostdinc -o fib_c.out $<
