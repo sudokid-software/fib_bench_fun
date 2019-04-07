@@ -7,8 +7,8 @@ no_buffer_asm:
 asm_with_printf:
 	nasm -felf64 fib_asm_c.asm && gcc-4.9 fib_asm_c.o -o fib_asm_c.out
 
-c:
-	gcc -O3 fib_c.c -o fib_c.out
+c: fib_c.c
+	gcc -std=c89 -pedantic -O4 -flto -s -static -nostdlib -nostdinc -o c.out $<
 
 c_draco:
 	gcc -O3 fib_c_draco.c -o fib_c_draco.out
@@ -24,4 +24,3 @@ luajit:
 
 bench:
 	hyperfine './fib.out' './fib_c.out' './fib_rust.out' 'elixir fib_elixir.exs' 'java -jar fib_clj.jar' 'node fib_javascript.js' './fib_asm_c.out' 'GOGC=off ./fib_go.out' './fib_c_draco.out' 'python3 fib_python3.py' 'luajit fib_luajit.luajit' 'lua fib_lua.lua' './fib_no_buffer.out' 'node fib_staghouse.js' 'ruby fib_ruby.rb'
-
